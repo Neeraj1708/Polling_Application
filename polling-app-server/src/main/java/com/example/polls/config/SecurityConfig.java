@@ -38,80 +38,106 @@ public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
-    // 1. Inject the ALLOWED_ORIGINS from Render (same as WebMvcConfig)
+    // ✅ Comes from Render Environment Variables
     @Value("${app.cors.allowedOrigins}")
     private List<String> allowedOrigins;
 
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationEntryPoint unauthorizedHandler) {
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService,
+                          JwtAuthenticationEntryPoint unauthorizedHandler) {
         this.customUserDetailsService = customUserDetailsService;
         this.unauthorizedHandler = unauthorizedHandler;
     }
 
+    // ===================== JWT FILTER =====================
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
 
+    // ===================== PASSWORD =====================
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // ===================== AUTH MANAGER =====================
     @Bean
     public AuthenticationManager authenticationManager() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(customUserDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return new ProviderManager(authProvider);
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(customUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return new ProviderManager(provider);
     }
 
-    // 2. THIS IS THE FIX: Use the variable, do not hardcode localhost
-  @Bean
-public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-    
-    // Using allowedOriginPatterns is more robust for production URLs
-    configuration.setAllowedOriginPatterns(allowedOrigins); 
-    
-    // Explicitly allow common HTTP methods
-    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-    
-    // Explicitly allow required headers
-    configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
-    
-    configuration.setAllowCredentials(true);
-    configuration.setMaxAge(3600L);
+    // ===================== CORS =====================
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
-}
+        // ✅ VERY IMPORTANT: use patterns (works with https + subdomains)
+        configuration.setAllowedOriginPatterns(allowedOrigins);
 
-   @Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf(AbstractHttpConfigurer::disable)
-        // 1. Ensure CORS is enabled first
-        .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
-        .exceptionHandling(exceptionHandling -> exceptionHandling
-                .authenticationEntryPoint(unauthorizedHandler)
-        )
-        .sessionManagement(sessionManagement -> sessionManagement
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        )
-        .authorizeHttpRequests(auth -> auth
-                // 2. ADD THIS LINE: Explicitly permit all Preflight OPTIONS requests
-                .requestMatchers(org.springframework.web.cors.CorsUtils::isPreFlightRequest).permitAll() 
-                
-                .requestMatchers("/api/auth/**", "/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
-                .permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
-                .permitAll()
-                .anyRequest().authenticated()
+        configuration.setAllowedMethods(
+                List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
         );
 
-    http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        configuration.setAllowedHeaders(
+                List.of("Authorization", "Cache-Control", "Content-Type")
+        );
 
-    return http.build();
-}
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    // ===================== SECURITY FILTER CHAIN =====================
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http
+            .csrf(AbstractHttpConfigurer::disable)
+
+            // ✅ CORS MUST COME FIRST
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+            .exceptionHandling(ex ->
+                    ex.authenticationEntryPoint(unauthorizedHandler)
+            )
+
+            .sessionManagement(session ->
+                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+
+            .authorizeHttpRequests(auth -> auth
+
+                // ✅ CRITICAL: Allow ALL preflight requests
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                // ✅ Public endpoints
+                .requestMatchers(
+                        "/api/auth/**",
+                        "/api/user/checkUsernameAvailability",
+                        "/api/user/checkEmailAvailability"
+                ).permitAll()
+
+                .requestMatchers(HttpMethod.GET,
+                        "/api/polls/**",
+                        "/api/users/**"
+                ).permitAll()
+
+                .anyRequest().authenticated()
+            );
+
+        http.addFilterBefore(
+                jwtAuthenticationFilter(),
+                UsernamePasswordAuthenticationFilter.class
+        );
+
+        return http.build();
+    }
 }
