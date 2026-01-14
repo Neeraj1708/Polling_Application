@@ -1,0 +1,114 @@
+/* 1. Linear Gradient Background - CHANGED TO TEAL THEME */
+.new-poll-container {
+    /* Old Purple/Blue: linear-gradient(135deg, #722ed1 0%, #1890ff 100%); */
+    background: linear-gradient(135deg, #00b96b 0%, #00796b 100%); /* New Teal Gradient */
+    min-height: calc(100vh - 64px);
+    padding: 40px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* 2. White Card Container */
+.new-poll-content {
+    background: #fff;
+    max-width: 650px;
+    width: 100%;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.5s ease-out;
+}
+
+.page-title {
+    color: #333;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+    letter-spacing: -0.5px;
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #595959;
+    font-size: 15px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+/* Character Count */
+.char-count {
+    text-align: right;
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+}
+
+/* Button Styling - CHANGED TO TEAL THEME */
+.create-poll-form-button {
+    height: 45px;
+    font-size: 16px;
+    font-weight: 600;
+    /* Old Purple: #722ed1 */
+    background: #00b96b; 
+    border-color: #00b96b;
+    border-radius: 25px;
+    /* Old Shadow: rgba(114, 46, 209, 0.4) */
+    box-shadow: 0 4px 15px rgba(0, 185, 107, 0.4); 
+    transition: all 0.3s;
+}
+
+.create-poll-form-button:hover, .create-poll-form-button:focus {
+    /* Old Dark Purple: #531dab */
+    background: #009657;
+    border-color: #009657;
+    transform: translateY(-2px);
+}
+
+/* Inputs - CHANGED FOCUS STATE TO TEAL */
+.ant-input, .ant-input-lg {
+    border: 1px solid #d9d9d9;
+    transition: all 0.3s;
+}
+
+.ant-input:focus, .ant-input:hover {
+    /* Old Purple focus: #722ed1 */
+    border-color: #00b96b;
+    /* Old Purple shadow style */
+    box-shadow: 0 0 0 2px rgba(0, 185, 107, 0.2);
+}
+
+/* Animations */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 576px) {
+    .new-poll-content {
+        padding: 25px;
+    }
+    
+    .page-title {
+        font-size: 24px;
+    }
+}

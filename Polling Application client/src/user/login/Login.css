@@ -1,0 +1,86 @@
+/* Container Background */
+.login-container {
+    min-height: calc(100vh - 64px);
+    background: #f0f2f5; /* Clean light gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Card Styling */
+.login-content {
+    background: #fff;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    width: 400px;
+    max-width: 100%;
+    padding: 40px;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.login-illustration {
+    margin-bottom: 30px;
+    background: #f9f0ff;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Form Elements */
+.login-form {
+    text-align: left;
+}
+
+.login-form-button {
+    width: 100%;
+    height: 45px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 10px;
+    background-color: #722ed1;
+    border-color: #722ed1;
+}
+
+.login-form-button:hover {
+    background-color: #531dab;
+    border-color: #531dab;
+}
+
+/* Remember Me / Forgot Password */
+.remember-forgot-row {
+    margin-bottom: 15px;
+}
+
+.login-form-forgot {
+    color: #722ed1;
+}
+
+.login-form-forgot:hover {
+    color: #531dab;
+}
+
+/* Social Login */
+.social-login {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+/* Input Styling */
+.ant-input {
+    height: 45px;
+}

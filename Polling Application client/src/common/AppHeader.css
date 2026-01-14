@@ -1,0 +1,80 @@
+.app-header {
+    background-color: #fff;
+    box-shadow: 0 2px 8px #f0f1f2;
+    padding: 0;
+    z-index: 10;
+    position: relative;
+}
+
+.app-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    height: 64px;
+}
+
+.app-title > a {
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.app-menu {
+    border-bottom: none !important;
+    line-height: 64px;
+}
+
+/* Fixes for Ant Menu items alignment */
+.app-menu .ant-menu-item {
+    padding: 0 15px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+.app-menu .ant-menu-item:hover {
+    border-bottom: 2px solid #722ed1;
+    color: #722ed1;
+}
+
+.nav-icon {
+    margin-right: 5px;
+}
+
+.poll-icon {
+    width: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Dropdown Menu Styling */
+.profile-dropdown-menu {
+    min-width: 180px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.user-full-name-info {
+    font-weight: 600;
+    color: #333;
+    font-size: 15px;
+}
+
+.username-info {
+    color: #888;
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+}
+
+.dropdown-icon {
+    margin-right: 8px;
+}

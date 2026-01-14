@@ -1,0 +1,107 @@
+.server-error-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.server-error-content {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* 1. Icon Styling */
+.server-icon-container {
+    margin-bottom: 20px;
+    color: #f5222d; /* Ant Design 'Error' Red */
+}
+
+.server-error-icon {
+    font-size: 100px;
+    animation: floating 4s ease-in-out infinite;
+}
+
+.server-shadow {
+    width: 50px;
+    height: 8px;
+    background: rgba(245, 34, 45, 0.1);
+    border-radius: 50%;
+    margin: 10px auto 0;
+    animation: shadowPulse 4s ease-in-out infinite;
+}
+
+/* 2. 500 Title with "Heartbeat" animation */
+.server-error-title {
+    font-size: 80px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #434343;
+    line-height: 1;
+    position: relative;
+    /* Feature: Text Shadow for depth */
+    text-shadow: 4px 4px 0px rgba(0,0,0,0.1); 
+    animation: pulseText 2s infinite;
+}
+
+.server-error-desc {
+    font-size: 18px;
+    color: #8c8c8c;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+/* 3. Buttons */
+.server-error-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Adds space between buttons */
+}
+
+.retry-btn {
+    border-radius: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #f5222d; /* Red for Error/Action */
+    border-color: #f5222d;
+    box-shadow: 0 4px 15px rgba(245, 34, 45, 0.3);
+}
+
+.retry-btn:hover, .retry-btn:focus {
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+}
+
+.server-back-btn {
+    border-radius: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: #595959;
+    border-color: #d9d9d9;
+}
+
+/* Animations */
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes shadowPulse {
+    0% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(0.8); opacity: 0.1; }
+    100% { transform: scale(1); opacity: 0.3; }
+}
+
+@keyframes pulseText {
+    0% { opacity: 1; }
+    50% { opacity: 0.85; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
