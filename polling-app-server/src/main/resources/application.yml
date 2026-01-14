@@ -30,4 +30,4 @@ app:
   jwtExpirationInMs: 604800000
 
   cors:
-    allowedOrigins: ${ALLOWED_ORIGINS:http://localhost:3000}
+    allowedOrigins: ${APP_CORS_ALLOWEDORIGINS:http://localhost:3000}
