@@ -44,17 +44,7 @@ A full-stack, real-time polling application where users can create polls, vote o
 * **Dynamic Dashboard:** View polls, vote counts, and winner statistics instantly.
 * **Cloud Architecture:** Fully decoupled frontend and backend communicating via REST APIs.
 
----
-
-## 📸 Screenshots
-
-*(Add your screenshots here. You can upload them to your repo and link them)*
-
-| Login Page | Poll Dashboard |
-|:---:|:---:|
-| ![Login](https://via.placeholder.com/400x200?text=Login+Page) | ![Dashboard](https://via.placeholder.com/400x200?text=Poll+Dashboard) |
-
----
+ 
 
 ## ⚙️ Local Setup Guide
 
